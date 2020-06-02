@@ -1,15 +1,16 @@
 #We have 64 samples (4 tissue "B, P, O, L" x 4 time points "T1, T2, T3, T4" x 4 reps "F1, F2, F3, F4")
+#sample names "header of the count matrix" will be needed at the end 
 
 samples <- c("B_T1F1","B_T1F2","B_T1F3","B_T1F4","B_T2F1","B_T2F2","B_T2F3","B_T2F4","B_T3F1","B_T3F2","B_T3F3","B_T3F4","B_T4F1","B_T4F2","B_T4F3","B_T4F4", 
              "P_T1F1","P_T1F2","P_T1F3","P_T1F4","P_T2F1","P_T2F2","P_T2F3","P_T2F4","P_T3F1","P_T3F2","P_T3F3","P_T3F4","P_T4F1","P_T4F2","P_T4F3","P_T4F4",
              "O_T1F1","O_T1F2","O_T1F3","O_T1F4","O_T2F1","O_T2F2","O_T2F3","O_T2F4","O_T3F1","O_T3F2","O_T3F3","O_T3F4","O_T4F1","O_T4F2","O_T4F3","O_T4F4",
              "L_T1F1","L_T1F2","L_T1F3","L_T1F4","L_T2F1","L_T2F2","L_T2F3","L_T2F4","L_T3F1","L_T3F2","L_T3F3","L_T3F4","L_T4F1","L_T4F2","L_T4F3","L_T4F4")
 
+#read samples function 
 read.sample <- function(sample.name) {
   file.name <- paste(sample.name, ".counts", sep="")
   result <- read.delim(file.name, col.names=c("gene", "count"), sep="\t", colClasses=c("character", "numeric"))
 }
-
 sample.1 <- read.sample(samples[1])
 sample.2 <- read.sample(samples[2])
 sample.3 <- read.sample(samples[3])
@@ -79,17 +80,18 @@ nrow(sample.1) == nrow(sample.2)
 all(sample.1$gene == sample.2$gene)
 
 #add geneIDs as first column and then add the counts for each sample
-all.data <- sample.1
-all.data <- cbind(sample.1, sample.2$count, sample.3$count, sample.4$count, sample.5$count, sample.6$count, sample.7$count,sample.8$count,sample.9$count, sample.10$count, sample.11$count, sample.12$count, sample.13$count, sample.14$count,sample.15$count, sample.16$count)
-
-
-#check!
-head(all.data)
-tail(all.data)
-
+64RawCount.data <- sample.1
+64RawCount.data <- cbind(sample.1, sample.2$count, sample.3$count, sample.4$count, sample.5$count, sample.6$count, sample.7$count,sample.8$count,sample.9$count, sample.10$count, sample.11$count, sample.12$count, sample.13$count, sample.14$count,sample.15$count, sample.16$count,
+                  sample.17, sample.18$count, sample.19$count, sample.20$count, sample.21$count, sample.22$count, sample.23$count,sample.24$count,sample.25$count, sample.26$count, sample.27$count, sample.28$count, sample.29$count, sample.30$count,sample.31$count, sample.32$count,
+                  sample.33, sample.34$count, sample.35$count, sample.36$count, sample.37$count, sample.38$count, sample.39$count,sample.40$count,sample.41$count, sample.42$count, sample.43$count, sample.44$count, sample.45$count, sample.46$count,sample.47$count, sample.48$count,
+                  sample.49, sample.50$count, sample.51$count, sample.52$count, sample.53$count, sample.54$count, sample.55$count,sample.56$count,sample.57$count, sample.58$count, sample.59$count, sample.60$count, sample.61$count, sample.62$count,sample.63$count, sample.64$count
+                 )
 #take away last 5 lines from HTSeq count files 
-all.data <- all.data[1:(nrow(all.data)-5),]
-
-head(all.data)
+64RawCount.data <- all.data[1:(nrow(all.data)-5),]
 #add column names 
-colnames(all.data) <- samples
+colnames(64RawCount.data) <- samples
+#Final check!
+dim(64RawCount.data)
+head(64RawCount.data)
+tail(64RawCount.data)
+
