@@ -80,8 +80,8 @@ nrow(sample.1) == nrow(sample.2)
 all(sample.1$gene == sample.2$gene)
 
 #add geneIDs as first column and then add the counts for each sample
-64RawCount.data <- sample.1
-64RawCount.data <- cbind(sample.1, sample.2$count, sample.3$count, sample.4$count, sample.5$count, sample.6$count, sample.7$count,sample.8$count,sample.9$count, sample.10$count, sample.11$count, sample.12$count, sample.13$count, sample.14$count,sample.15$count, sample.16$count,
+RawCount.data <- sample.1
+RawCount.data <- cbind(sample.1, sample.2$count, sample.3$count, sample.4$count, sample.5$count, sample.6$count, sample.7$count,sample.8$count,sample.9$count, sample.10$count, sample.11$count, sample.12$count, sample.13$count, sample.14$count,sample.15$count, sample.16$count,
                   sample.17, sample.18$count, sample.19$count, sample.20$count, sample.21$count, sample.22$count, sample.23$count,sample.24$count,sample.25$count, sample.26$count, sample.27$count, sample.28$count, sample.29$count, sample.30$count,sample.31$count, sample.32$count,
                   sample.33, sample.34$count, sample.35$count, sample.36$count, sample.37$count, sample.38$count, sample.39$count,sample.40$count,sample.41$count, sample.42$count, sample.43$count, sample.44$count, sample.45$count, sample.46$count,sample.47$count, sample.48$count,
                   sample.49, sample.50$count, sample.51$count, sample.52$count, sample.53$count, sample.54$count, sample.55$count,sample.56$count,sample.57$count, sample.58$count, sample.59$count, sample.60$count, sample.61$count, sample.62$count,sample.63$count, sample.64$count
@@ -89,7 +89,7 @@ all(sample.1$gene == sample.2$gene)
 #take away last 5 lines from HTSeq count files 
 RawCount.data <- all.data[1:(nrow(all.data)-5),]
 #add column names 
-colnames(64RawCount.data) <- samples
+colnames(RawCount.data) <- samples
 #Final check!
 dim(RawCount.data)
 head(RawCount.data)
