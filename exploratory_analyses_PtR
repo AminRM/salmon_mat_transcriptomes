@@ -1,2 +1,8 @@
 #starting from the matrix containing the raw count data 
-#use trinity functions to explore your data
+#using utilities "functions" within trinity to explore your data
+
+1- check your samples for outliers, perfom log2 and CPM transformation to obtain multi-pages results of mapped fragments and samples correlation 
+providing a samples.txt file describing sample-replicate relationships 
+
+module load R 
+/apps/trinity/2.8.4/Analysis/DifferentialExpression/PtR --matrix RawCount.data --samples samples.txt --compare_replicates --CPM --log2 --min_rowSums 10
