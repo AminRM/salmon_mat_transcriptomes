@@ -31,18 +31,22 @@ data = read.table("/flush1/moh034/Maturation/all_data_matrix/all_data_new_matrix
 col_ordering = c(5,6,7,8,1,2,3,4)
 rnaseqMatrix = data[,col_ordering]
 rnaseqMatrix = round(rnaseqMatrix)
+#filter lowly expressed genes
 rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
 conditions = factor(c(rep("Liver_T2", 4), rep("Liver_T1", 4)))
 exp_study = DGEList(counts=rnaseqMatrix, group=conditions)
 exp_study = calcNormFactors(exp_study)
 exp_study = estimateCommonDisp(exp_study)
 exp_study = estimateTagwiseDisp(exp_study)
+#test for DE 
 et = exactTest(exp_study, pair=c("Liver_T2", "Liver_T1"))
 tTags = topTags(et,n=NULL)
 result_table = tTags$table
 result_table = data.frame(sampleA="Liver_T2", sampleB="Liver_T1", result_table)
 result_table$logFC = -1 * result_table$logFC
+#write the results table into a txt file 
 write.table(result_table, file='Liver_T2_vs_Liver_T1.DE_results', sep='	', quote=F, row.names=T)
+#write the matrix of the raw counts of these genes into a txt file
 write.table(rnaseqMatrix, file='Liver_T2_vs_Liver_T1.count_matrix', sep='	', quote=F, row.names=T)
 
 #plot results as MA and volcano plots!
