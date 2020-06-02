@@ -87,11 +87,15 @@ all(sample.1$gene == sample.2$gene)
                   sample.49, sample.50$count, sample.51$count, sample.52$count, sample.53$count, sample.54$count, sample.55$count,sample.56$count,sample.57$count, sample.58$count, sample.59$count, sample.60$count, sample.61$count, sample.62$count,sample.63$count, sample.64$count
                  )
 #take away last 5 lines from HTSeq count files 
-64RawCount.data <- all.data[1:(nrow(all.data)-5),]
+RawCount.data <- all.data[1:(nrow(all.data)-5),]
 #add column names 
 colnames(64RawCount.data) <- samples
 #Final check!
-dim(64RawCount.data)
-head(64RawCount.data)
-tail(64RawCount.data)
+dim(RawCount.data)
+head(RawCount.data)
+tail(RawCount.data)
+
+#read in a file that contains gene length; this will be used later to get FPKM values 
+file_len<- read.delim("gene_length.txt",header=F,sep="\t")
+
 
