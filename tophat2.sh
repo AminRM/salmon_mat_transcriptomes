@@ -4,7 +4,7 @@
 #SBATCH --error dump.err
 #SBATCH --ntasks-per-node=10
 #SBATCH --mem=20gb
-#SBATCH --time=20:00:00
+#SBATCH --time=100:00:00
 #SBATCH --mail-user=amin.esmail@csiro.au
 
 module load bowtie
