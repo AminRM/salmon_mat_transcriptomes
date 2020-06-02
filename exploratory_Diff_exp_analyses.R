@@ -24,7 +24,8 @@ module load R
 /apps/trinity/2.8.4/Analysis/DifferentialExpression/PtR --matrix FPKMCount.data --min_rowSums 10 -s samples.txt --sample_cor_matrix
 #samples separated by tissues and T1 samples (control) clearly separted from post-maturation(T2-T4) samples 
 
-4- DE analysis liver T2 vs T1, this analyses has been repeated for all comparisons T2, T3, T4 vs T1 at each tissue, the matrix has all expression data for 64 samples 
+4- DE analysis liver T2 vs T1, I will annotate the first DE test only as the rest will be very similar: 
+this analyses has been repeated for all comparisons T2, T3, T4 vs T1 at each tissue, the matrix has all expression data for 64 samples 
 
 #Read the raw counts matrix and choose samples and perform 
 data = read.table("/flush1/moh034/Maturation/all_data_matrix/all_data_new_matrix.matrix", header=T, row.names=1, com='')
@@ -33,6 +34,7 @@ rnaseqMatrix = data[,col_ordering]
 rnaseqMatrix = round(rnaseqMatrix)
 #filter lowly expressed genes
 rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
+#define the replicates for each condition 
 conditions = factor(c(rep("Liver_T2", 4), rep("Liver_T1", 4)))
 exp_study = DGEList(counts=rnaseqMatrix, group=conditions)
 exp_study = calcNormFactors(exp_study)
@@ -54,6 +56,7 @@ pdf("Liver_T2_vs_Liver_T1.edgeR.DE_results.MA_n_Volcano.pdf")
 
 plot_MA_and_Volcano(rownames(result_table), result_table$logCPM, result_table$logFC, result_table$FDR)
 dev.off()
+
 
 
 
