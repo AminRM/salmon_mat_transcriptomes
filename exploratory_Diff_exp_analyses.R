@@ -27,7 +27,8 @@ module load R
 4- DE analysis liver T2 vs T1, I will annotate the first DE test only as the rest will be very similar: 
 this analyses has been repeated for all comparisons T2, T3, T4 vs T1 at each tissue, the matrix has all expression data for 64 samples 
 
-#Read the raw counts matrix and choose samples and perform 
+###################################################################################################################################  
+#Read the raw counts matrix and choose samples and perform the first DE test liver T2 vs T1
 data = read.table("/flush1/moh034/Maturation/all_data_matrix/all_data_new_matrix.matrix", header=T, row.names=1, com='')
 col_ordering = c(5,6,7,8,1,2,3,4)
 rnaseqMatrix = data[,col_ordering]
@@ -53,9 +54,51 @@ write.table(rnaseqMatrix, file='Liver_T2_vs_Liver_T1.count_matrix', sep='	', quo
 #plot results as MA plot!
 pdf("Liver_T2_vs_Liver_T1.edgeR.DE_results.MA_n_Volcano.pdf")
 source("/flush1/moh034/Maturation/rnaseq_plot_funcs.R")
-plot_MA(rownames(result_table), result_table$logCPM, result_table$logFC, result_table$FDR)
+plot_MA(rownames(result_table), result_table$logCPM, result_table$logFC)
+dev.off()
+###############################################liver_T3vsT1####################################################################################  
+col_ordering = c(9,10,11,12,1,2,3,4)
+rnaseqMatrix = data[,col_ordering]
+rnaseqMatrix = round(rnaseqMatrix)
+rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
+conditions = factor(c(rep("Liver_T3", 4), rep("Liver_T1", 4)))
+exp_study = DGEList(counts=rnaseqMatrix, group=conditions)
+exp_study = calcNormFactors(exp_study)
+exp_study = estimateCommonDisp(exp_study)
+exp_study = estimateTagwiseDisp(exp_study)
+et = exactTest(exp_study, pair=c("Liver_T3", "Liver_T1"))
+tTags = topTags(et,n=NULL)
+result_table = tTags$table
+result_table = data.frame(sampleA="Liver_T3", sampleB="Liver_T1", result_table)
+result_table$logFC = -1 * result_table$logFC
+write.table(result_table, file='Liver_T3_vs_Liver_T1.edgeR.DE_results', sep='	', quote=F, row.names=T)
+write.table(rnaseqMatrix, file='Liver_T3_vs_Liver_T1.edgeR.count_matrix', sep='	', quote=F, row.names=T)
+source("/flush1/moh034/Maturation/rnaseq_plot_funcs.R")
+pdf("Liver_T3_vs_Liver_T1.edgeR.DE_results.MA_n_Volcano.pdf")
+plot_MA (rownames(result_table), result_table$logCPM, result_table$logFC)
 dev.off()
 
+###############################################liver_T4vsT1####################################################################################  
+col_ordering = c(13,14,15,16,1,2,3,4)
+rnaseqMatrix = data[,col_ordering]
+rnaseqMatrix = round(rnaseqMatrix)
+rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
+conditions = factor(c(rep("Liver_T4", 4), rep("Liver_T1", 4)))
+exp_study = DGEList(counts=rnaseqMatrix, group=conditions)
+exp_study = calcNormFactors(exp_study)
+exp_study = estimateCommonDisp(exp_study)
+exp_study = estimateTagwiseDisp(exp_study)
+et = exactTest(exp_study, pair=c("Liver_T4", "Liver_T1"))
+tTags = topTags(et,n=NULL)
+result_table = tTags$table
+result_table = data.frame(sampleA="Liver_T4", sampleB="Liver_T1", result_table)
+result_table$logFC = -1 * result_table$logFC
+write.table(result_table, file='Liver_T4_vs_Liver_T1.edgeR.DE_results', sep='	', quote=F, row.names=T)
+write.table(rnaseqMatrix, file='Liver_T4_vs_Liver_T1.edgeR.count_matrix', sep='	', quote=F, row.names=T)
+source("/flush1/moh034/Maturation/rnaseq_plot_funcs.R")
+pdf("Liver_T4_vs_Liver_T1.edgeR.DE_results.MA_n_Volcano.pdf")
+plot_MA(rownames(result_table), result_table$logCPM, result_table$logFC)
+dev.off()
 
 
 
