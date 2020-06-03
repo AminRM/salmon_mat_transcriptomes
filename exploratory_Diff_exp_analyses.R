@@ -50,11 +50,10 @@ result_table$logFC = -1 * result_table$logFC
 write.table(result_table, file='Liver_T2_vs_Liver_T1.DE_results', sep='	', quote=F, row.names=T)
 #write the matrix of the raw counts of these genes into a txt file
 write.table(rnaseqMatrix, file='Liver_T2_vs_Liver_T1.count_matrix', sep='	', quote=F, row.names=T)
-
-#plot results as MA and volcano plots!
+#plot results as MA plot!
 pdf("Liver_T2_vs_Liver_T1.edgeR.DE_results.MA_n_Volcano.pdf")
-
-plot_MA_and_Volcano(rownames(result_table), result_table$logCPM, result_table$logFC, result_table$FDR)
+source("/flush1/moh034/Maturation/rnaseq_plot_funcs.R")
+plot_MA(rownames(result_table), result_table$logCPM, result_table$logFC, result_table$FDR)
 dev.off()
 
 
