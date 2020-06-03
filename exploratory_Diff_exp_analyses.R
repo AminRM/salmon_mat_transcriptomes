@@ -100,6 +100,73 @@ pdf("Liver_T4_vs_Liver_T1.edgeR.DE_results.MA_n_Volcano.pdf")
 plot_MA(rownames(result_table), result_table$logCPM, result_table$logFC)
 dev.off()
 
+###############################################brain_T2vsT1####################################################################################  
+col_ordering = c(21,22,23,24,17,18,19,20)
+rnaseqMatrix = data[,col_ordering]
+rnaseqMatrix = round(rnaseqMatrix)
+rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
+conditions = factor(c(rep("Brain_T2", 4), rep("Brain_T1", 4)))
+exp_study = DGEList(counts=rnaseqMatrix, group=conditions)
+exp_study = calcNormFactors(exp_study)
+exp_study = estimateCommonDisp(exp_study)
+exp_study = estimateTagwiseDisp(exp_study)
+et = exactTest(exp_study, pair=c("Brain_T2", "Brain_T1"))
+tTags = topTags(et,n=NULL)
+result_table = tTags$table
+result_table = data.frame(sampleA="Brain_T2", sampleB="Brain_T1", result_table)
+result_table$logFC = -1 * result_table$logFC
+write.table(result_table, file='Brain_T2_vs_Brain_T1.edgeR.DE_results', sep='	', quote=F, row.names=T)
+write.table(rnaseqMatrix, file='Brain_T2_vs_Brain_T1.edgeR.count_matrix', sep='	', quote=F, row.names=T)
+source("/flush1/moh034/Maturation/rnaseq_plot_funcs.R")
+pdf("Brain_T2_vs_Brain_T1.edgeR.DE_results.MA.pdf")
+plot_MA(rownames(result_table), result_table$logCPM, result_table$logFC)
+dev.off()
+
+###############################################brain_T3vsT1####################################################################################  
+col_ordering = c(25,26,27,28,17,18,19,20)
+rnaseqMatrix = data[,col_ordering]
+rnaseqMatrix = round(rnaseqMatrix)
+rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
+conditions = factor(c(rep("Brain_T3", 4), rep("Brain_T1", 4)))
+exp_study = DGEList(counts=rnaseqMatrix, group=conditions)
+exp_study = calcNormFactors(exp_study)
+exp_study = estimateCommonDisp(exp_study)
+exp_study = estimateTagwiseDisp(exp_study)
+et = exactTest(exp_study, pair=c("Brain_T3", "Brain_T1"))
+tTags = topTags(et,n=NULL)
+result_table = tTags$table
+result_table = data.frame(sampleA="Brain_T3", sampleB="Brain_T1", result_table)
+result_table$logFC = -1 * result_table$logFC
+write.table(result_table, file='Brain_T3_vs_Brain_T1.edgeR.DE_results', sep='	', quote=F, row.names=T)
+write.table(rnaseqMatrix, file='Brain_T3_vs_Brain_T1.edgeR.count_matrix', sep='	', quote=F, row.names=T)
+source("/flush1/moh034/Maturation/rnaseq_plot_funcs.R")
+pdf("Brain_T3_vs_Brain_T1.edgeR.DE_results.MA.pdf")
+plot_MA(rownames(result_table), result_table$logCPM, result_table$logFC)
+dev.off()
+
+###############################################brain_T4vsT1####################################################################################  
+col_ordering = c(29,30,31,32,17,18,19,20)
+rnaseqMatrix = data[,col_ordering]
+rnaseqMatrix = round(rnaseqMatrix)
+rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
+conditions = factor(c(rep("Brain_T4", 4), rep("Brain_T1", 4)))
+exp_study = DGEList(counts=rnaseqMatrix, group=conditions)
+exp_study = calcNormFactors(exp_study)
+exp_study = estimateCommonDisp(exp_study)
+exp_study = estimateTagwiseDisp(exp_study)
+et = exactTest(exp_study, pair=c("Brain_T4", "Brain_T1"))
+tTags = topTags(et,n=NULL)
+result_table = tTags$table
+result_table = data.frame(sampleA="Brain_T4", sampleB="Brain_T1", result_table)
+result_table$logFC = -1 * result_table$logFC
+write.table(result_table, file='Brain_T4_vs_Brain_T1.edgeR.DE_results', sep='	', quote=F, row.names=T)
+write.table(rnaseqMatrix, file='Brain_T4_vs_Brain_T1.edgeR.count_matrix', sep='	', quote=F, row.names=T)
+source("/flush1/moh034/Maturation/rnaseq_plot_funcs.R")
+pdf("Brain_T4_vs_Brain_T1.edgeR.DE_results.MA.pdf")
+plot_MA_and_Volcano(rownames(result_table), result_table$logCPM, result_table$logFC)
+dev.off()
+
+
 
 
 
