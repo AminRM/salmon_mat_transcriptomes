@@ -30,8 +30,9 @@ head (pit_gene_universe)
 head (liver_gene_universe)
 
 ########################################################################################################
-up- and downregulated gene clusters in ovary 
+#up- and downregulated gene clusters in ovary 
 ########################################################################################################
+#ovary upregulated  cluster
 ovary_up <- read.table("/Users/moh034/RNA_Seq/cluster_1_ovary4clusterprofiler.txt", header=T, sep="\t")
 dim(ovary_up)
 head(ovary_up)
@@ -46,7 +47,7 @@ write.csv(ego_ovary_up_Summary, file = "/Users/moh034/RNA_Seq/ego_ovary_up.csv",
 dotplot(ego_ovary_up, showCategory=20, font.size = 10)
 dev.off()
 
-#ovary T4 downregulated  cluster
+#ovary downregulated  cluster
 ovary_down <- read.table("/Users/moh034/RNA_Seq/cluster_2_ovary4clusterprofiler.txt", header=T, sep="\t")
 dim(ovary_down)
 head(ovary_down)
@@ -62,7 +63,7 @@ dotplot(ego_ovary_down, showCategory=20, font.size = 10)
 dev.off()
 
 ########################################################################################################
-up- and downregulated clusters in pituitary  
+#up- and downregulated clusters in pituitary  
 ########################################################################################################
 #pituitary upregulated  cluster
 pit_up <- read.table("/Users/moh034/RNA_Seq/Pit_Up_Clust4ClusterProfiler.txt", header=T, sep="\t")
@@ -92,4 +93,37 @@ ego_pit_down <- enrichGO(gene = names(pit_down_FC), universe = as.character(pit_
 ego_pit_down_Summary <- data.frame(ego_pit_down)
 write.csv(ego_pit_down_Summary, file = "/Users/moh034/RNA_Seq/ego_pit_down.csv", row.names=FALSE)
 dotplot(ego_pit_down, showCategory=20, font.size = 10)
+dev.off()
+
+########################################################################################################
+#up- and downregulated clusters in liver  
+########################################################################################################
+#liver upregulated  cluster
+liver_up <- read.table("/Users/moh034/RNA_Seq/liver_Up_Clust4ClusterProfiler.txt", header=T, sep="\t")
+dim(liver_up)
+head(liver_up)
+rownames(liver_up)<- NULL
+liver_up_FC <- liver_up$logFC
+names(liver_up_FC) <- liver_up$geneID
+head(liver_up_FC)
+liver_up_FC <- sort(liver_up_FC, decreasing = TRUE)
+ego_liver_up <- enrichGO(gene = names(liver_up_FC), universe = as.character(pit_gene_universe$ENTREZID), keyType = 'ENTREZID', OrgDb = salmodb, ont="ALL", pAdjustMethod = "fdr",pvalueCutoff  = 0.05,qvalueCutoff  = 0.05)
+ego_pit_up_Summary <- data.frame(ego_pit_up)
+write.csv(ego_liver_up_Summary, file = "/Users/moh034/RNA_Seq/ego_liver_up.csv", row.names=FALSE)
+dotplot(ego_liver_up, showCategory=20, font.size = 10)
+dev.off()
+
+#liver downregulated  cluster
+liver_down <- read.table("/Users/moh034/RNA_Seq/liver_DownClust4clusterProfiler.txt", header=T, sep="\t")
+dim(liver_down)
+head(liver_down)
+rownames(liver_down)<- NULL
+liver_down_FC <- liver_down$logFC
+names(liver_down_FC) <- liver_down$geneID
+head(liver_down_FC)
+liver_down_FC <- sort(liver_down_FC, decreasing = TRUE)
+ego_liver_down <- enrichGO(gene = names(liver_down_FC), universe = as.character(pit_gene_universe$ENTREZID), keyType = 'ENTREZID', OrgDb = salmodb, ont="ALL", pAdjustMethod = "fdr",pvalueCutoff  = 0.05,qvalueCutoff  = 0.05)
+ego_liver_down_Summary <- data.frame(ego_liver_down)
+write.csv(ego_liver_down_Summary, file = "/Users/moh034/RNA_Seq/ego_liver_down.csv", row.names=FALSE)
+dotplot(ego_liver_down, showCategory=20, font.size = 10)
 dev.off()
