@@ -1,7 +1,6 @@
 #starting from the matrix containing the raw count data 
 #using utilities "functions" within trinity to explore your data
-
-1- perfom log2 and CPM transformation to obtain multi-pages results of number of mapped fragments per treatment and samples correlation 
+#1-perfom log2 and CPM transformation to obtain multi-pages results of number of mapped fragments per treatment and samples correlation 
 providing a samples.txt file describing treatment-replicate relationships 
 
 module load R 
