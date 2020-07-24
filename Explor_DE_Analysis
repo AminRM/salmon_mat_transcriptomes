@@ -1,7 +1,7 @@
 #starting from the matrix containing the raw count data 
 #using utilities "functions" within trinity to explore your data
 #1-perfom log2 and CPM transformation to obtain multi-pages results of number of mapped fragments per treatment and samples correlation 
-providing a samples.txt file describing treatment-replicate relationships 
+#providing a samples.txt file describing treatment-replicate relationships 
 
 module load R 
 /apps/trinity/2.8.4/Analysis/DifferentialExpression/PtR --matrix RawCount.data --samples samples.txt --compare_replicates --CPM --log2 --min_rowSums 10
@@ -18,12 +18,12 @@ logCPM <- cpm(exp_study, prior.count=2, log=TRUE)
 FPKM <- logCPM(y) #where y is the gene length infor  
 write.table(FPKM, file="FPKMCount.data", quote=F, sep="\t", row.names=F)
 
-3- check your samples for outliers, compare replicates across all samples by generating a correlation matrix for all sample replicates using log2-FPKM (TMM normalised matrix)
+#3-check your samples for outliers, compare replicates across all samples by generating a correlation matrix for all sample replicates using log2-FPKM (TMM normalised matrix)
 module load R 
 /apps/trinity/2.8.4/Analysis/DifferentialExpression/PtR --matrix FPKMCount.data --min_rowSums 10 -s samples.txt --sample_cor_matrix
 #samples separated by tissues and T1 samples (control) clearly separted from post-maturation(T2-T4) samples 
 
-4- DE analysis liver T2 vs T1, I will annotate the first DE test only as the rest will be very similar: 
+DE analysis liver T2 vs T1, I will annotate the first DE test only as the rest will be very similar: 
 this analyses has been repeated for all comparisons T2, T3, T4 vs T1 at each tissue, the matrix has all expression data for 64 samples 
 
 ###################################################################################################################################  
