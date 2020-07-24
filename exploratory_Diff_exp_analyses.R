@@ -191,6 +191,53 @@ dev.off()
 
 ###############################################pituitary_T3vsT1####################################################################################  
 
+col_ordering = c(41,42,43,44,33,34,35,36)
+rnaseqMatrix = data[,col_ordering]
+rnaseqMatrix = round(rnaseqMatrix)
+rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
+conditions = factor(c(rep("Pit_T3", 4), rep("Pit_T1", 4)))
+
+exp_study = DGEList(counts=rnaseqMatrix, group=conditions)
+exp_study = calcNormFactors(exp_study)
+exp_study = estimateCommonDisp(exp_study)
+exp_study = estimateTagwiseDisp(exp_study)
+et = exactTest(exp_study, pair=c("Pit_T3", "Pit_T1"))
+tTags = topTags(et,n=NULL)
+result_table = tTags$table
+result_table = data.frame(sampleA="Pit_T3", sampleB="Pit_T1", result_table)
+result_table$logFC = -1 * result_table$logFC
+write.table(result_table, file='Pit_T3_vs_Pit_T1.edgeR.DE_results', sep='	', quote=F, row.names=T)
+write.table(rnaseqMatrix, file='Pit_T3_vs_Pit_T1.edgeR.count_matrix', sep='	', quote=F, row.names=T)
+source("/flush1/moh034/Maturation/rnaseq_plot_funcs.R")
+pdf("Pit_T3_vs_Pit_T1.edgeR.DE_results.MA.pdf")
+plot_MA(rownames(result_table), result_table$logCPM, result_table$logFC)
+dev.off()
+
+###############################################pituitary_T4vsT1####################################################################################  
+col_ordering = c(45,46,47,48,33,34,35,36)
+rnaseqMatrix = data[,col_ordering]
+rnaseqMatrix = round(rnaseqMatrix)
+rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
+conditions = factor(c(rep("Pit_T4", 4), rep("Pit_T1", 4)))
+
+exp_study = DGEList(counts=rnaseqMatrix, group=conditions)
+exp_study = calcNormFactors(exp_study)
+exp_study = estimateCommonDisp(exp_study)
+exp_study = estimateTagwiseDisp(exp_study)
+et = exactTest(exp_study, pair=c("Pit_T4", "Pit_T1"))
+tTags = topTags(et,n=NULL)
+result_table = tTags$table
+result_table = data.frame(sampleA="Pit_T4", sampleB="Pit_T1", result_table)
+result_table$logFC = -1 * result_table$logFC
+write.table(result_table, file='Pit_T4_vs_Pit_T1.edgeR.DE_results', sep='	', quote=F, row.names=T)
+write.table(rnaseqMatrix, file='Pit_T4_vs_Pit_T1.edgeR.count_matrix', sep='	', quote=F, row.names=T)
+source("/flush1/moh034/Maturation/rnaseq_plot_funcs.R")
+pdf("Pit_T4_vs_Pit_T1.edgeR.DE_results.MA_n_Volcano.pdf")
+plot_MA(rownames(result_table), result_table$logCPM, result_table$logFC)
+dev.off()
+
+
+
 
 
 
